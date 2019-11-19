@@ -1,0 +1,47 @@
+.c-user-item {
+
+  height: 30px;
+  padding: 3px 3px 3px 8px;
+
+  &__name{
+    margin: 0;
+    font-size: 15px;
+    line-height: 26px;
+    color: #686868;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95px;
+    overflow: hidden;
+    float: left;
+  }
+
+  &__controls {
+    float: right;
+  }
+  &__control {
+    cursor: pointer;
+    color: #78cc7f;
+    line-height: 25px;
+    margin: 0 3px 0 0;
+    &:hover {
+      color: darken(#78cc7f, 20)
+    }
+
+    &--off{
+      color: #cc6b70;
+      &:hover {
+        color: darken(#cc6b70, 20)
+      }
+    }
+  }
+
+  &--current{
+    background-color: #e2e2e2;
+  }
+
+  &__user-ico {
+    font-size: 15px;
+    line-height: 15px;
+    margin: 0 5px 0 0;
+  }
+}

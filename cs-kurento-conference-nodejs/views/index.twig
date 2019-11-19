@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+{% block styles %}
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+{% endblock %}
+{% block body %}
+  <div class="login">
+    <form action="/room" method="GET" class="login-form">
+      <input placeholder="Room name:" class="input" type="text" name="roomName" id="roomName">
+      <input placeholder="User name:" class="input" type="text" name="userName" id="userName">
+      <button class="button">Enter</button>
+    </form>
+  </div>
+
+{% endblock %}

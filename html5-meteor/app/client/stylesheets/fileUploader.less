@@ -1,0 +1,86 @@
+.file-upload-wrapper, .record-control-wrapper{
+  display: inline-block;
+  position: relative;
+  input {
+    text-indent: -90000px;
+    font-size:0;
+    display: none;
+    &:focus{
+      outline: none;
+    }
+  }
+  i {
+    font-size:30px;
+    color: #469DCF;
+    &:hover {
+      color: rgb(42, 94, 124);
+    }
+
+  }
+
+  &.error i ,
+  &.error .file-upload-loader{
+    color: #ae1411;
+  }
+
+  .file-upload-loader {
+    font-size: 11px;
+    color: #469DCF;
+    position: absolute;
+    bottom: -2px;
+    text-align: center;
+    width: 100%;
+    padding: 0 0 0 2px;
+  }
+
+}
+
+.record-control-wrapper {
+  padding: 0 7px 0 0;
+  display: inline-block;
+  position: relative;
+  top: -8px;
+  cursor: pointer;
+  color: #8e0303;
+  font-weight: bold;
+  font-size: 10px;
+  img {
+    width: 30px;
+    height: 30px;
+    opacity: .3;
+    &:hover{
+      opacity:.6;
+    }
+  }
+}
+.record-control-wrapper.recording{
+  img{
+    opacity: 1;
+    &:hover{
+      opacity: .8;
+    }
+  }
+}
+
+.record-status-wrapper{
+  padding: 0 7px 0 0;
+  display: inline-block;
+  position: relative;
+  top: -8px;
+  cursor: auto;
+  color: #8e0303;
+  font-weight: bold;
+  font-size: 10px;
+  img {
+    width: 30px;
+    height: 30px;
+    opacity: .3;
+
+  }
+}
+.record-status-wrapper.recording{
+  img{
+    opacity: 1;
+
+  }
+}

@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<config>
+    <localeversion suppressWarning="false">0.9.0</localeversion>
+    <version>420</version>
+    <help url="https://chiamo-bbb-10.youseeu.com/help.html"/>
+    <javaTest url="https://chiamo-bbb-10.youseeu.com/testjava.html"/>
+    <porttest host="chiamo-bbb-10.youseeu.com" application="video/portTest" timeout="10000"/>    
+    <bwMon server="172.30.1.211" application="video/bwTest"/>
+    <application uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" host="https://chiamo-bbb-10.youseeu.com/bigbluebutton/api/enter"/>
+    <language userSelectionEnabled="true" />
+    <skinning enabled="true" url="https://chiamo-bbb-10.youseeu.com/client/branding/css/BBBDefault.css.swf" />
+    <shortcutKeys showButton="true" />
+    <browserVersions chrome="47" firefox="43" flash="19" java="1.7.0_51" />
+    <layout showLogButton="false" defaultLayout="bbb.layout.name.defaultlayout"
+            showToolbar="true" showFooter="true" showMeetingName="true" showHelpButton="true" 
+            showLogoutWindow="true" showLayoutTools="true" confirmLogout="true"
+            showRecordingNotification="true"/>
+    <meeting muteOnStart="false" />
+    <logging enabled="true" target="trace" level="info" format="{dateUTC} {time} :: {name} :: [{logLevel}] {message}" uri="http://chiamo-bbb-10.youseeu.com"/>
+    <lock disableCamForLockedUsers="false" disableMicForLockedUsers="false" disablePrivateChatForLockedUsers="false" 
+          disablePublicChatForLockedUsers="false" lockLayoutForLockedUsers="false" lockOnJoin="true" lockOnJoinConfigurable="false"/>
+            
+		<modules>
+		 
+		<module name="ChatModule" url="https://chiamo-bbb-10.youseeu.com/client/ChatModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" 
+			dependsOn="UsersModule"	
+			privateEnabled="true"  
+			fontSize="12"
+			position="top-right"
+			baseTabIndex="701"
+			colorPickerIsVisible="false"
+			maxMessageLength="1024"
+		/>
+
+		<module name="UsersModule" url="https://chiamo-bbb-10.youseeu.com/client/UsersModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" 
+			allowKickUser="true"
+			enableEmojiStatus="true"
+			enableSettingsButton="true"
+			baseTabIndex="301"
+		/>
+
+		
+		<module name="DeskShareModule" 
+			url="https://chiamo-bbb-10.youseeu.com/client/DeskShareModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/deskShare"
+			publishURI="chiamo-bbb-10.youseeu.com"
+			useTLS="false"
+			showButton="true"
+			autoStart="false"
+			autoFullScreen="false"
+			baseTabIndex="201"
+		/>
+		
+		<module name="PhoneModule" url="https://chiamo-bbb-10.youseeu.com/client/PhoneModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/sip" 
+			autoJoin="true"
+			listenOnlyMode="true"
+			presenterShareOnly="false"
+			skipCheck="false"
+			showButton="true"
+			enabledEchoCancel="true"
+			useWebRTCIfAvailable="true"
+			showPhoneOption="false"
+			echoTestApp="9196"
+			dependsOn="UsersModule"
+		/>
+
+		<module name="VideoconfModule" url="https://chiamo-bbb-10.youseeu.com/client/VideoconfModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/video"
+			dependson = "UsersModule"
+			baseTabIndex="401"
+			presenterShareOnly = "false"
+			controlsForPresenter = "false"
+			autoStart = "false"
+			skipCamSettingsCheck="false"
+			showButton = "true"
+			showCloseButton = "true"
+			publishWindowVisible = "true"
+			viewerWindowMaxed = "false"
+			viewerWindowLocation = "top"
+			smoothVideo="false"
+			applyConvolutionFilter="false"
+			convolutionFilter="-1, 0, -1, 0, 6, 0, -1, 0, -1"
+			filterBias="0"
+			filterDivisor="4"
+			displayAvatar = "false"
+			focusTalking = "false"
+			glowColor = "0x4A931D"
+			glowBlurSize = "30.0"
+			priorityRatio = "0.67"
+		/>
+		
+		<module name="WhiteboardModule" url="https://chiamo-bbb-10.youseeu.com/client/WhiteboardModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" 
+			dependsOn="PresentModule"
+			baseTabIndex="601"
+			whiteboardAccess="presenter"
+			keepToolbarVisible="false"
+		/>
+		
+		<module name="PollingModule" url="https://chiamo-bbb-10.youseeu.com/client/PollingModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" 
+			dependsOn="PresentModule"
+		/>
+		
+		<module name="PresentModule" url="https://chiamo-bbb-10.youseeu.com/client/PresentModule.swf?v=420" 
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton" 
+			host="https://chiamo-bbb-10.youseeu.com" 
+			showPresentWindow="true"
+			showWindowControls="true"
+			openExternalFileUploadDialog="false"
+			dependsOn="UsersModule"
+			baseTabIndex="501"
+			maxFileSize="30"
+		/>
+
+		<module name="LayoutModule" url="https://chiamo-bbb-10.youseeu.com/client/LayoutModule.swf?v=420"
+			uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton"
+			layoutConfig="https://chiamo-bbb-10.youseeu.com/client/conf/layout.xml"
+			enableEdit="false"
+		/>
+
+<!--
+    <module name="NotesModule" url="http://chiamo-bbb-10.youseeu.com/client/NotesModule.swf?v=420"
+      saveURL="http://chiamo-bbb-10.youseeu.com"
+      position="top-left"
+    />
+    
+    <module name="BroadcastModule" url="http://chiamo-bbb-10.youseeu.com/client/BroadcastModule.swf?v=420"
+      uri="rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton"
+      streamsUri="http://chiamo-bbb-10.youseeu.com/streams.xml"
+      position="top-left"
+      showStreams="true"
+      autoPlay="false"
+      dependsOn="UsersModule"
+    />
+-->
+    		
+	</modules>
+</config>

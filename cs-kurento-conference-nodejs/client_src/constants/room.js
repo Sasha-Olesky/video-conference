@@ -1,0 +1,3 @@
+export const SET_ROOM_NAME = "SET_ROOM_NAME";
+export const SET_CURRENT_USER_ID = "SET_CURRENT_USER_ID";
+export const ROOM_IS_LOADED = "ROOM_IS_LOADED";

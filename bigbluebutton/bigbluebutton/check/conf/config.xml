@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<version>0.9.0-30</version>
+	<mail>support@youseeu.com</mail>
+	<chromeLatestVersion>41</chromeLatestVersion>
+	<firefoxLatestVersion>36</firefoxLatestVersion>
+	<downloadFilePath url="test_image.jpg"/>
+	<ports>
+		<port>
+			<name>Port 9123</name>
+			<number>9123</number>
+		</port>
+	</ports>
+	<rtmpapps>
+		<app>
+			<name>RTMP YouSeeU app</name>
+			<uri>rtmp://chiamo-bbb-10.youseeu.com/bigbluebutton</uri>
+		</app>
+		<app>
+			<name>RTMP deskShare app</name>
+			<uri>rtmp://chiamo-bbb-10.youseeu.com/deskShare</uri>
+		</app>
+		<app>
+			<name>RTMP video app</name>
+			<uri>rtmp://chiamo-bbb-10.youseeu.com/video</uri>
+		</app>
+		<app>
+			<name>RTMP sip app</name>
+			<uri>rtmp://chiamo-bbb-10.youseeu.com/sip</uri>
+		</app>
+		<app>
+			<name>RTMPT YouSeeU app</name>
+			<uri>rtmpt://chiamo-bbb-10.youseeu.com/bigbluebutton</uri>
+		</app>
+		<app>
+			<name>RTMPT deskShare app</name>
+			<uri>rtmpt://chiamo-bbb-10.youseeu.com/deskShare</uri>
+		</app>
+		<app>
+			<name>RTMPT video app</name>
+			<uri>rtmpt://chiamo-bbb-10.youseeu.com/video</uri>
+		</app>
+		<app>
+			<name>RTMPT sip app</name>
+			<uri>rtmpt://chiamo-bbb-10.youseeu.com/sip</uri>
+		</app>
+	</rtmpapps>
+</config>

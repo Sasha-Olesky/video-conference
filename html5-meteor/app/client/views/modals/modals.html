@@ -1,0 +1,172 @@
+<!-- listen only | microphone -->
+<template name="settingsAudio">
+  <fieldset class="desktopSettingsFieldset">
+    <legend align="center">{{ i18n "audio_options_title" }}</legend>
+      <div id="audioButtonContainer">
+      {{#if amIInAudio}}
+        {{#if amIListenOnlyAudio}}
+          <!-- display listen only with exit -->
+          {{> makeButton id="exitAudio" btn_class="exitAudio settingsButton joinAudioButton" i_class="ion-volume-mute" rel="tooltip"
+          data_placement="bottom" title="leave_audio_call_title"}}
+        {{else}}
+          <!-- display microphone with exit -->
+          {{> makeButton id="exitAudio" btn_class="exitAudio settingsButton joinAudioButton" i_class="ion-volume-mute" rel="tooltip"
+          data_placement="bottom" title="leave_audio_call_title"}}
+        {{/if}}
+      {{else}}
+        <!-- display both with join -->
+        {{#if canJoinWithMic}}
+          {{> makeButton id="joinMicrophone" btn_class="joinMicrophone settingsButton joinAudioButton" i_class="fi-microphone"
+          rel="tooltip" data_placement="bottom" title="join_microphone_title"}}
+        {{/if}}
+        {{> makeButton id="joinListenOnly" btn_class="joinListenOnly settingsButton joinAudioButton" i_class="fi-volume"
+        rel="tooltip" data_placement="bottom" title="join_listen_only"}}
+      {{/if}}
+    </div>
+  </fieldset>
+</template>
+
+<template name="viewersModal">
+  <div class="bar topBar">
+    <p>
+      <span class="modalTitle">Lock Viewers</span>
+    </p>
+  </div>
+  <form class="viewersSettingsForm">
+    <table class="lockSettingsTable">
+    <tr>
+      <th>Feature</th>
+      <th>Locked</th>
+    </tr>
+    <tr>
+      <td><label>Webcam</label></td>
+      <td><input type="checkbox" name="disable_camera"  checked="{{roomLockSettings.disableCam}}"></td>
+    </tr>
+    <tr>
+      <td><label>Microphone</label></td>
+      <td><input type="checkbox" name="disable_microphone"   checked="{{roomLockSettings.disableMic}}"></td>
+    </tr>
+    <tr>
+      <td><label>Public Chat</label></td>
+      <td><input type="checkbox" name="disable_public_chat"  checked="{{roomLockSettings.disablePublicChat}}"></td>
+    </tr>
+    <tr>
+      <td><label>Private Chat</label></td>
+      <td><input type="checkbox" name="disable_private_chat"  checked="{{roomLockSettings.disablePrivateChat}}"></td>
+    </tr>
+    <tr>
+      <td><label>Layout</label></td>
+      <td><input type="checkbox" name="locked_layout"  checked="{{roomLockSettings.lockedLayout}}"></td>
+    </tr>
+      <input class="hidden" type="checkbox" name="lock_on_join"  checked="{{roomLockSettings.lockOnJoin}}">
+      <input class="hidden" type="checkbox" name="lock_on_join_configurable"  checked="{{roomLockSettings.lockOnJoinConfigurable}}">
+    </table>
+  </form>
+
+
+  <div class="bar bottomBar">
+    <button class="js-save-viewers-settings">Apply</button>
+    <button class="js-close-viewers-modal">Close</button>
+  </div>
+</template>
+
+<template name="settingsModal">
+  <div class="bar topBar">
+    <p>
+        <span class="modalTitle">{{ i18n "youseeu_sync_meeting_settings_title" }}</span>
+    </p>
+  </div>
+
+  <div class="settingsBody">
+    {{> settingsAudio}}
+    {{> optionsFontSize}}
+    {{{getBBBSettingsInfo}}}
+  </div>
+
+  <div class="bar bottomBar">
+    {{> makeButton id="closeSettings" btn_class="settingsButton vertically-centered" rel="tooltip" title="close" label="close"}}
+  </div>
+</template>
+
+<template name="logoutModal">
+  <p>{{ i18n "are_you_sure_you_want_to_logout" }}</p>
+  {{> makeButton id="yes" btn_class="logoutButton" label="yes"}}
+  {{> makeButton id="no" btn_class="logoutButton" label="no"}}
+</template>
+
+<template name="optionsFontSize">
+  <fieldset class="desktopSettingsFieldset">
+    <legend align="center"><span class="chatOptionsText" >{{ i18n "chat_message_font_size_title" }}</span><br/></legend>
+    <table id="fontSizeTable" align="center">
+      <tr>
+        <td>{{> makeButton id="decreaseFontSize" btn_class="displayButtons" i_class="fi-minus" rel="tooltip" title="decrease_font_size_title"}}</td>
+        <td id="displayLabel"><label class="fontSizeLabel" {{messageFontSize}} >{{ i18n "size" }}({{getInSession "messageFontSize"}})</label></td>
+        <td>{{> makeButton id="increaseFontSize" btn_class="displayButtons" i_class="fi-plus" rel="tooltip" title="increase_font_size_title"}}</td>
+      </tr>
+    </table>
+  </fieldset>
+</template>
+
+<template name="videoConferenceModal">
+  <script src="/html5client/conference/CONFIG.js" type="text/javascript"></script>
+  <script src="/html5client/conference/main.js" type="text/javascript"></script>
+  <div style="display: none" id="iframe-div" class="iframe-div" ></div>
+  <div class="modal noselect" id="myModal" style="display: none">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{i18n "published_cams_title"}}</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <div type="button" onclick="showconf()" class="btn btn-default" data-dismiss="modal">{{i18n "close"}}</div>
+        </div>
+      </div>
+      <div class="modal-resize-left"></div>
+      <div class="modal-resize-right"></div>
+      <div class="modal-resize-top"></div>
+      <div class="modal-resize-bottom"></div>
+    </div>
+  </div>
+</template>
+
+<template name="chromeDeskshareErrorModal">
+  <div class="modal noselect" id="chromeDeskshareError" style="display: none">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{i18n "chrome_deskshare_error_title"}}</h4>
+        </div>
+        <div class="modal-body">
+          {{{i18n "chrome_deskshare_error_message_html"}}}
+        </div>
+        <div class="modal-footer">
+          <div type="button" onclick="toggleModal('#chromeDeskshareError')" class="btn btn-default" data-dismiss="modal">{{i18n "close"}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="firefoxDeskshareErrorModal">
+  <div class="modal noselect" id="firefoxDeskshareError" style="display: none">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{i18n "firefox_deskshare_error_title"}}</h4>
+        </div>
+        <div class="modal-body">
+          {{{i18n "firefox_deskshare_error_message_html"}}}
+        </div>
+        <div class="modal-footer">
+          <div type="button" onclick="toggleModal('#firefoxDeskshareError')" class="btn btn-default" data-dismiss="modal">{{i18n "close"}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

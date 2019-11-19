@@ -1,0 +1,23 @@
+{
+  "name": "kurentolearning",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Kontsedal <kontsedal@inbox.ru>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "socket.io-client": "^1.5.1",
+    "kurento-utils": "6.6.0",
+    "adapter.js": "v0.2.9",
+    "font-awesome": "^4.7.0"
+  }
+}

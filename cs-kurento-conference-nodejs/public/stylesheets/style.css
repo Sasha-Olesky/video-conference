@@ -1,0 +1,69 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+}
+body {
+    padding: 0;
+    margin: 0;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.login {
+    width: 100%;
+    height: 100%;
+}
+.login-form {
+    width: 400px;
+    padding: 20px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+.input  {
+    border: solid 4px #e5e5e5;
+    border-radius: 0;
+    background: #fff;
+    transition: border-color 0.3s;
+    resize: none;
+    outline: medium none;
+    padding: 0.4em;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+.input:focus {
+    border-color: #b2ebff;
+}
+.button {
+    width: 100px;
+    height: 50px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+    text-transform: uppercase;
+    font-size: 17px;
+    letter-spacing: 1px;
+    background-color: #f0e3ee;
+}
+
+.button:hover{
+    background-color: #b2ebff;
+    color: #333;
+    cursor: pointer;
+}
+
+.iframed .c-user-list{
+    display: none!important;
+}
+.iframed .c-stream-list {
+    width: 100%!important;
+    height: 100%!important;
+    max-width: 100%!important;
+    max-height: 100%!important;
+}
+.iframed .c-header{
+    display: none;
+}

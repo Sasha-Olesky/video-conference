@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="/libs/firebase.js"></script>
+    <script src="/libs/adapter.js/adapter.js"></script>
+    <script src="/libs/getScreenId.js"></script>
+    <script src="/libs/screen.js"></script>
+
+{% endblock %}
+
+{% block body %}
+    <div id="app" style="height: 100%;"></div>
+    <script src="/javascripts/bundle.js"></script>
+    <script>
+        if (window.top!=window.self) {
+            document.body.className = document.body.className + ' iframed';
+        }
+
+    </script>
+{% endblock %}

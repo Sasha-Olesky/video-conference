@@ -1,0 +1,275 @@
+<template name="whiteboard">
+  <div id="{{id}}" {{visibility name}} class="component">
+    {{#if getCurrentSlide}}
+      {{>slide}}
+      {{forceSlideShow}}
+    {{else}}
+      {{clearSlide}}
+    {{/if}}
+
+    <div id="whiteboard-container" class="{{whiteboardSize}}">
+      <div id="whiteboard-paper">
+      </div>
+      {{#if isCurrentUserPresenter}}
+        {{> presenterDrawingControl}}
+      {{/if}}
+      <!-- TODO: Move this to the whiteboardControls -->
+      <div class="FABContainer {{#unless hasNoPresentation}}noPresentation{{/unless}}">
+        <button type="submit" class="FABTriggerButton">
+          <i class="ion-android-hand"></i>
+        </button>
+        {{#each emojiIcons}}
+          <button type="submit" value={{name}} class="{{name}}EmojiButton {{#if equals getCurrentUserEmojiStatus name}}activeEmojiButton{{else}}inactiveEmojiButton{{/if}}">
+            {{> icon name=icon size="50"}}
+          </button>
+        {{/each}}
+      </div>
+      {{#if isMobile}}
+        {{> makeButton btn_class="soaringButton fullscreenButton whiteboardFullscreenButton" i_class="ion-arrow-expand"}}
+      {{/if}}
+    </div>
+    {{#if isCurrentUserPresenter}}
+      {{> whiteboardControls}}
+    {{/if}}
+    {{#if isPollStarted}}
+      {{> polling}}
+    {{/if}}
+    {{#if isCurrentUserPresenter}}
+      {{> createPolling }}
+    {{/if}}
+  </div>
+
+</template>
+
+<template name="whiteboardControls">
+  <div id="whiteboard-controls">
+    <div class="whiteboard-buttons-left">
+      <!-- TODO: Adjust the presenter uploader for mobile views on iOS devices
+                 you cant upload PDFs, only images from camera/gallery -->
+      {{#unless isMobile}}
+        {{> presenterUploaderControl}}
+      {{/unless}}
+    </div>
+    <div class="whiteboard-buttons-right">
+    </div>
+    <div class="whiteboard-buttons-center">
+      {{#if isCurrentUserPresenter}}
+        <div class="whiteboard-buttons-slide">
+          {{> makeButton btn_class="prev" i_class="ion-arrow-left-a" rel="tooltip" data_placement="top" title="previous"}}
+          <span class="current">
+            {{presentationProgress}}
+          </span>
+          {{> makeButton btn_class="next" i_class="ion-arrow-right-a" rel="tooltip" data_placement="top" title="next"}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="presenterDrawingControl">
+
+  <div style="opacity: 0" class="presenter-drawer-control">
+    <div class="presenter-drawer-container">
+      <div class="draw-command js-draw js-draw-move" data-type="hand" title="{{ i18n 'move_and_zoom'}}">
+        <i class="ion-android-hand"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-pencil" data-type="pencil" title="{{ i18n 'pencil' }}">
+        <i class="ion-edit"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-rectangle" data-type="rectangle" title="{{ i18n 'rectangle'}}">
+        <i class="ion-stop"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-ellipse" data-type="ellipse" title="{{ i18n 'circle'}}">
+        <i class="ion-record"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-triangle" data-type="triangle" title="{{ i18n 'triangle'}}">
+          <i class="ion-arrow-up-b"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-line" data-type="line" title="{{ i18n 'line'}}">
+        <i class="ion-android-remove"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-text" data-type="text" title="{{ i18n 'text' }}">
+        <i class="ion-android-list"></i>
+      </div>
+      <div class="draw-command" style="visibility: hidden">
+        <i></i>
+      </div>
+      <div class="draw-command js-draw js-draw-clean" title="{{ i18n 'clean'}}">
+        <i class="ion-close-circled"></i>
+      </div>
+      <div class="draw-command js-draw js-draw-undo" title="{{ i18n 'undo'}}">
+        <i class="ion-chevron-left"></i>
+      </div>
+      <input class="js-drawer-colorpicker colorpicker" type="color">
+      <input type="range" class="thickness js-drawer-thicknesspicker" max="30" min="1" value="1">
+    </div>
+  </div>
+
+</template>
+
+<template name="presenterUploaderControl">
+  {{#if isCurrentUserPresenter}}
+    <div class="presenter-uploader-control {{#if isOpen}}is-open{{/if}}">
+      <div class="presenter-uploader-container">
+        <ul class="presenter-uploader-file-list">
+          {{#if ifCond meetings.convert '&&' meetings.convert.error}}
+            {{>conversationError}}
+          {{/if}}
+          {{> presenterUploaderControlConvertation}}
+          {{#each files}}
+            {{> presenterUploaderControlFileListItem}}
+          {{/each}}
+          {{#each presentations}}
+            {{> presenterUploaderControlPresentationListItem}}
+          {{/each}}
+        </ul>
+        <div class="presenter-uploader-dropzone" data-dropzone>
+          <input type="file" class="presenter-uploader-dropzone-fileinput" multiple />
+          <i class="presenter-uploader-dropzone-icon ion-archive"></i>
+          <span class="presenter-uploader-dropzone-label">{{{ i18n "drop_files_here_or_click_to_upload_html"}}}</span>
+        </div>
+        {{> makeButton btn_class="presenter-uploader-control-btn js-close" i_class="ion-ios-close-outline"}}
+        <div class="presenter-uploader-tip">
+         {{{ i18n "upload_any_office_document_uppercase_html" }}}
+        </div>
+      </div>
+      {{> makeButton btn_class="presenter-uploader-control-btn js-open" i_class="ion-ios-upload-outline"}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="presenterUploaderControlFileListItem">
+  <li class="presenter-uploader-file-item is-uploading">
+    <span class="presenter-uploader-file-item-name">
+      {{name}}
+    </span>
+    <span class="presenter-uploader-file-item-progress">
+      {{percUploaded}}%
+    </span>
+  </li>
+</template>
+
+<template name="conversationError">
+  <li class="presenter-uploader-file-item error">
+    <span class="presenter-uploader-file-item-name">
+     {{meetings.convert.error}}
+    </span>
+    <span class="presenter-uploader-file-item-actions">
+      <i class="ion-ios-trash-outline js-delete-presentation-error"></i>
+    </span>
+  </li>
+</template>
+
+<template name="presenterUploaderControlConvertation">
+  {{#if ifCond meetings.convert '&&' meetings.convert.in_progress}}
+  <li class="presenter-uploader-file-item is-uploading">
+    <span class="presenter-uploader-file-item-name">
+      {{meetings.convert.presentation_name}}
+    </span>
+    <span class="presenter-uploader-file-item-progress">
+      {{#if ifCond meetings.convert.pages_completed "!=" meetings.convert.num_pages }}
+        CONVERTED: {{meetings.convert.pages_completed}}/{{meetings.convert.num_pages}}
+      {{else}}
+        <span class="generating-thumbnails">Generating thumbnails...</span>
+      {{/if}}
+    </span>
+  </li>
+  {{/if}}
+</template>
+
+<template name="presenterUploaderControlPresentationListItem">
+  <li class="presenter-uploader-file-item {{#if current}}current{{/if}}">
+    <span class="presenter-uploader-file-item-name" data-action-show>
+      {{name}}
+    </span>
+    <span class="presenter-uploader-file-item-actions">
+      {{#unless current}}
+        <i class="ion-ios-eye-outline js-show-presentation" data-id="{{id}}" data-action-show></i>
+      {{/unless}}
+      <i class="ion-ios-trash-outline js-delete-presentation" data-id="{{id}}" data-action-delete></i>
+    </span>
+  </li>
+</template>
+
+<template name="polling">
+  <div class="polling">
+    {{#each getPollQuestions}}
+      {{> makeButton btn_class="pollButtons" rel="tooltip" data_placement="top" label=key answer=id style=style }}
+    {{/each}}
+  </div>
+</template>
+
+<template name="createPolling">
+  <div class="createPolling js-create-polling">
+    <i class="ion-stats-bars"></i>
+    <div class="pollingVariants js-poll-variants" style="display: none">
+      <div class="pollingVariant js-poll-variant" data-type="YN">Yes/No</div>
+      <div class="pollingVariant js-poll-variant" data-type="TF">True/False</div>
+      <div class="pollingVariant js-poll-variant" data-type="A-2">A/B</div>
+      <div class="pollingVariant js-poll-variant" data-type="A-3">A/B/C</div>
+      <div class="pollingVariant js-poll-variant" data-type="A-4">A/B/C/D</div>
+      <div class="pollingVariant js-poll-variant" data-type="A-5">A/B/C/D/E</div>
+      <div class="pollingVariant js-poll-variant" data-type="A-6">A/B/C/D/E/F</div>
+      <div class="pollingVariant js-poll-variant js-open-custom-poll">Custom Poll..</div>
+    </div>
+  </div>
+  {{>polingResults}}
+  {{>customPoll}}
+</template>
+
+<template name="polingResults">
+  <div class="polingResults js-poling-results reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog" data-options="close_on_background_click:false">
+    <div class="bar topBar">
+      <p>
+        <span class="modalTitle">Live Poll Results</span>
+      </p>
+    </div>
+    <div class="pollingResultsBody">
+      {{#each currentPoll.poll_info.poll.answers}}
+      <div class="pollingResult">
+        <div class="pollingResult__key">
+          {{this.key}}
+        </div>
+        <div class="pollingResult__percent-holder">
+          <div class="pollingResult__percent-strip" style="width:{{ getPercent num_votes  currentPoll.poll_info.poll.num_responders }}%">
+              {{num_votes}}
+          </div>
+          <div class="pollingResult__percent">
+           {{ getPercent num_votes  currentPoll.poll_info.poll.num_responders }}%
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <p class="pollingStatus">
+        {{getStatus currentPoll}}
+    </p>
+    <div class="bar bottomBar">
+      <button  data-poll-id="{{currentPoll.poll_info.poll.id}}" class="js-publish-poling">Publish</button>
+      <button  data-poll-id="{{currentPoll.poll_info.poll.id}}" class="js-cancel-poling">Cancel</button>
+    </div>
+  </div>
+</template>
+
+<template name="customPoll">
+  <div class="customPoll js-poling-custom reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog" data-options="close_on_background_click:false">
+    <div class="bar topBar">
+      <p>
+        <span class="modalTitle">Enter polling choices</span>
+      </p>
+    </div>
+    <div class="customPollBody">
+      <input type="text" class="customPollVariant">
+      <input type="text" class="customPollVariant">
+      <input type="text" class="customPollVariant">
+      <input type="text" class="customPollVariant">
+      <input type="text" class="customPollVariant">
+      <input type="text" class="customPollVariant">
+    </div>
+    <div class="bar bottomBar">
+      <button  data-poll-id="{{currentPoll.poll_info.poll.id}}" class="js-start-poll">Start poll</button>
+      <button  data-poll-id="{{currentPoll.poll_info.poll.id}}" class="js-cancel-create-custom-poling">Cancel</button>
+    </div>
+  </div>
+</template>
+

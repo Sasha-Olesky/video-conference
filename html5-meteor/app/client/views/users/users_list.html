@@ -1,0 +1,22 @@
+<template name="usersList">
+  <div id="{{id}}" {{visibility name}} class="component {{class}}">
+    <h3 class="meetingTitle">
+      {{getMeetingName}}
+    </h3>
+    <a class="showconf" onclick="showconf()">{{i18n "show_cameras"}}</a>
+    <div id="user-contents">
+      <div class="userlist ScrollableWindowY">
+        {{#each getUsersInMeeting}}
+          <div id="content" class="userItem">{{>userItem}}</div>
+        {{/each}}
+      </div>
+        <div class="users-controls">
+            {{#if isCurrentUserModeratorOrPresenter}}
+            <div class="usersSettings js-show-lock-settings">
+                <i class="ion-gear-b"></i>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+  </div>
+</template>

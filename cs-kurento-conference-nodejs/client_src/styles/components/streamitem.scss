@@ -1,0 +1,64 @@
+@import "../variables";
+
+.c-stream-item {
+  width: $stream-item-width;
+  height: $stream-item-height;
+  border: 1px solid #bbb;
+  float: left;
+  margin: 0 10px 10px 0;
+
+  &__header {
+      height: $stream-item-header-height;
+      background-color:  #fff;
+      padding: 0 10px;
+      border-bottom: 1px solid #bbb;
+  }
+
+  &__name {
+    margin: 0;
+    line-height: 20px;
+    font-size: 15px;
+    color: #6e6e6e;
+    float: left;
+  }
+
+  &__controls {
+    float: right;
+    height: 100%;
+  }
+
+  &__control {
+    line-height: 21px;
+    color: #78cc7f;
+    cursor: pointer;
+    margin: 0 0 0 5px;
+
+    &:hover {
+      color: darken(#78cc7f, 20)
+    }
+
+    &--off{
+      color: #cc6b70;
+      &:hover {
+        color: darken(#cc6b70, 20)
+      }
+    }
+  }
+
+  &__body {
+    height: $stream-item-height - $stream-item-header-height;
+    overflow: hidden;
+  }
+
+  &__video{
+    width: 100%;
+    height: auto;
+  }
+
+  &--current {
+    .c-stream-item__header {
+      background-color: #ebe9f7;
+    }
+
+  }
+}

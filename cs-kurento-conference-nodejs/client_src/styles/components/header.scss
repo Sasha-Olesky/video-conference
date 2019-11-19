@@ -1,0 +1,30 @@
+@import "../variables";
+
+.c-header {
+  height: $header-height;
+  background-color: #e3e6ef;
+  padding: 0 15px;
+  &__title {
+    display: inline-block;
+    line-height: $header-height;
+    font-size: 20px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #9e9292;
+  }
+  &__logout{
+    float: right;
+    font-size: 30px;
+    position: relative;
+    top: 10px;
+    color: #9e92a0;
+
+    &:hover{
+      color: #a06361;
+    }
+    &:active{
+      color: #a05751;
+    }
+  }
+}
